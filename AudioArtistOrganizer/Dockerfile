@@ -3,16 +3,16 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["MusicLibraryOrganizer/MusicLibraryOrganizer.csproj", "MusicLibraryOrganizer/"]
-RUN dotnet restore "MusicLibraryOrganizer/MusicLibraryOrganizer.csproj"
+COPY ["AudioArtistOrganizer/AudioArtistOrganizer.csproj", "AudioArtistOrganizer/"]
+RUN dotnet restore "AudioArtistOrganizer/AudioArtistOrganizer.csproj"
 COPY . .
-WORKDIR "/src/MusicLibraryOrganizer"
-RUN dotnet build "MusicLibraryOrganizer.csproj" -c Release -o /app/build
+WORKDIR "/src/AudioArtistOrganizer"
+RUN dotnet build "AudioArtistOrganizer.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "MusicLibraryOrganizer.csproj" -c Release -o /app/publish
+RUN dotnet publish "AudioArtistOrganizer.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MusicLibraryOrganizer.dll"]
+ENTRYPOINT ["dotnet", "AudioArtistOrganizer.dll"]
